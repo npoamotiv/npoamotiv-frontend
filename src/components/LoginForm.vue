@@ -39,7 +39,7 @@
 
       <div class="form-actions">
         <button type="submit" class="btn-primary" :disabled="loading">
-          {{ loading ? 'Loading...' : 'Sign In' }}
+          {{ loading ? 'Загрузка...' : 'Войти' }}
         </button>
       </div>
 
@@ -122,44 +122,48 @@ const handleSubmit = async () => {
 .login-title {
   font-weight: 400;
   font-size: 1.88rem;
-  text-align: center;
+  text-align: start;
   color: var(--black-color);
+  margin-bottom: 1.875rem;
 }
 .login-container {
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: 100vh;
+  width: 100%;
   padding: 1rem;
 }
 
 .login-form {
-  width: 100%;
-  max-width: 400px;
   padding: 2rem;
+  min-width: 28.6rem;
   background: white;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  @media (max-width: 768px) {
+    width: 100%;
+  }
 }
 
 .form-actions {
   margin-top: 1.5rem;
+  border-radius: 0.62rem;
+  max-width: 28.75rem;
+  background: #f5f5f5;
 }
 
 .btn-primary {
   width: 100%;
-  padding: 0.75rem;
-  background: #4a90e2;
-  color: white;
+  color: #757d8a;
+  font-weight: 400;
   border: none;
-  border-radius: 4px;
-  font-size: 1rem;
   cursor: pointer;
-  transition: background 0.2s;
+  padding: 0.81rem 0.94rem;
+  height: 3.5rem;
 }
 
 .btn-primary:hover {
-  background: #357abd;
 }
 
 .btn-primary:disabled {
@@ -181,7 +185,7 @@ const handleSubmit = async () => {
   align-items: center;
 }
 
-input[type="checkbox"] {
+input[type='checkbox'] {
   width: 16px;
   height: 16px;
   cursor: pointer;
