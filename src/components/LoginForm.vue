@@ -1,41 +1,44 @@
 <template>
   <div class="login-container">
     <form @submit.prevent="handleSubmit" class="login-form">
-      <h1>Login</h1>
-      
-      <FormInput
-        v-model="login"
-        type="text"
-        label="Login"
-        placeholder="Enter your login"
-        :error="errors.login"
-        required
-      />
+      <h1 class="login-title">Вход в ERP-систему</h1>
 
       <FormInput
         v-model="tabel"
         type="text"
-        label="Tabel Number"
-        placeholder="Enter your tabel number"
+        label="Табельный номер"
+        placeholder="Введите табельный номер"
         :error="errors.tabel"
+        required
+      />
+
+      <FormInput
+        v-model="login"
+        type="text"
+        label="Логин"
+        placeholder="Введите логин"
+        :error="errors.login"
         required
       />
 
       <FormInput
         v-model="password"
         type="password"
-        label="Password"
-        placeholder="Enter your password"
+        label="Пароль"
+        placeholder="Введите пароль"
         :error="errors.password"
         required
       />
 
+      <div class="remember-me">
+        <div class="checkbox-container">
+          <input type="checkbox" v-model="rememberMe" id="remember" />
+          <label class="checkbox-label" for="remember">Запомнить аккаунт</label>
+        </div>
+      </div>
+
       <div class="form-actions">
-        <button 
-          type="submit" 
-          class="btn-primary"
-          :disabled="loading"
-        >
+        <button type="submit" class="btn-primary" :disabled="loading">
           {{ loading ? 'Loading...' : 'Sign In' }}
         </button>
       </div>
@@ -48,68 +51,80 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive } from 'vue'
-import { useRouter } from 'vue-router'
-import { useAuth } from '../composables/useAuth.ts'
-import FormInput from './FormInput.vue'
+import { ref, reactive } from 'vue';
+import { useRouter } from 'vue-router';
+import { useAuth } from '../composables/useAuth.ts';
+import FormInput from './FormInput.vue';
 
-const router = useRouter()
-const { loginUser, loading, error } = useAuth()
+const router = useRouter();
+const { loginUser, loading, error } = useAuth();
 
-const login = ref('')
-const tabel = ref('')
-const password = ref('')
+const login = ref('');
+const tabel = ref('');
+const password = ref('');
+const rememberMe = ref(false);
 const errors = reactive({
   login: '',
   tabel: '',
-  password: ''
-})
+  password: '',
+});
 
 const validateForm = (): boolean => {
-  let isValid = true
-  errors.login = ''
-  errors.tabel = ''
-  errors.password = ''
+  let isValid = true;
+  errors.login = '';
+  errors.tabel = '';
+  errors.password = '';
 
   if (!login.value) {
-    errors.login = 'Login is required'
-    isValid = false
+    errors.login = 'Login is required';
+    isValid = false;
   }
 
   if (!tabel.value) {
-    errors.tabel = 'Tabel number is required'
-    isValid = false
+    errors.tabel = 'Tabel number is required';
+    isValid = false;
   }
 
   if (!password.value || password.value.length < 6) {
-    errors.password = 'Password must be at least 6 characters'
-    isValid = false
+    errors.password = 'Password must be at least 6 characters';
+    isValid = false;
   }
 
-  return isValid
-}
+  return isValid;
+};
 
 const handleSubmit = async () => {
-  if (!validateForm()) return
+  if (!validateForm()) return;
 
   try {
     const response = await loginUser({
       login: login.value,
       tabel: tabel.value,
-      password: password.value
-    })
-    
+      password: password.value,
+    });
+
     if (response.access_token) {
-      localStorage.setItem('token', response.access_token)
-      router.push('/dashboard')
+      if (rememberMe.value) {
+        localStorage.setItem('token', response.access_token);
+        localStorage.setItem('rememberMe', 'true');
+      } else {
+        sessionStorage.setItem('token', response.access_token);
+      }
+      router.push('/dashboard');
     }
   } catch (err) {
-    console.error('Login failed:', err)
+    console.error('Login failed:', err);
   }
-}
+};
 </script>
 
 <style scoped>
+.login-title {
+  font-weight: 400;
+  font-size: 1.88rem;
+  text-align: center;
+  color: var(--black-color);
+}
 .login-container {
   display: flex;
   justify-content: center;
@@ -134,7 +149,7 @@ const handleSubmit = async () => {
 .btn-primary {
   width: 100%;
   padding: 0.75rem;
-  background: #4A90E2;
+  background: #4a90e2;
   color: white;
   border: none;
   border-radius: 4px;
@@ -144,7 +159,7 @@ const handleSubmit = async () => {
 }
 
 .btn-primary:hover {
-  background: #357ABD;
+  background: #357abd;
 }
 
 .btn-primary:disabled {
@@ -156,5 +171,26 @@ const handleSubmit = async () => {
   margin-top: 1rem;
   color: #dc3545;
   text-align: center;
+}
+.remember-me {
+  margin: 1rem 0;
+}
+
+.checkbox-container {
+  display: flex;
+  align-items: center;
+}
+
+input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+
+.checkbox-label {
+  margin-left: 0.5rem;
+  color: #666;
+  font-size: 0.875rem;
+  user-select: none;
 }
 </style>

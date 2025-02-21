@@ -16,69 +16,79 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed } from 'vue';
 
 const props = defineProps({
   modelValue: {
     type: [String, Number],
-    default: ''
+    default: '',
   },
   label: {
     type: String,
-    default: ''
+    default: '',
   },
   type: {
     type: String,
-    default: 'text'
+    default: 'text',
   },
   placeholder: {
     type: String,
-    default: ''
+    default: '',
   },
   required: {
     type: Boolean,
-    default: false
+    default: false,
   },
   error: {
     type: String,
-    default: ''
-  }
-})
+    default: '',
+  },
+});
 
-const emit = defineEmits(['update:modelValue'])
+const emit = defineEmits(['update:modelValue']);
 
-const id = computed(() => `input-${Math.random().toString(36).substring(2, 9)}`)
+const id = computed(
+  () => `input-${Math.random().toString(36).substring(2, 9)}`
+);
 
 const updateValue = (event: Event) => {
-  const target = event.target as HTMLInputElement
-  emit('update:modelValue', target.value)
-}
+  const target = event.target as HTMLInputElement;
+  emit('update:modelValue', target.value);
+};
 </script>
 
 <style scoped>
 .form-group {
   margin-bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }
 
 .form-label {
   display: block;
-  margin-bottom: 0.5rem;
-  font-weight: 500;
-  color: #333;
+  margin-bottom: 7px;
+  color: var(--grey-color);
+  font-weight: 400;
+  font-size: 1rem;
 }
 
 .form-input {
-  width: 100%;
-  padding: 0.75rem;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  font-size: 1rem;
   transition: border-color 0.2s;
+  border: 1px solid #d5d5d6;
+  border-radius: 0.75rem;
+  max-width: 28.75rem;
+  width: 100%;
+  height: 3.5rem;
+  font-weight: 400;
+  font-size: 1rem;
+  color: var(--grey-light-color);
+  padding: 1rem;
 }
 
 .form-input:focus {
   outline: none;
-  border-color: #4A90E2;
+  border-color: #4a90e2;
 }
 
 .form-input.has-error {
