@@ -1,17 +1,17 @@
 <template>
   <div class="form-group">
-    <label v-if="label" :for="id" class="form-label">{{ label }}</label>
+    <label v-if="props.label" :for="id" class="form-label">{{ props.label }}</label>
     <input
       :id="id"
-      :type="type"
-      :value="modelValue"
+      :type="props.type"
+      :value="props.modelValue"
       @input="updateValue"
-      :placeholder="placeholder"
-      :required="required"
+      :placeholder="props.placeholder"
+      :required="props.required"
       class="form-input"
-      :class="{ 'has-error': error }"
+      :class="{ 'has-error': props.error }"
     />
-    <span v-if="error" class="error-text">{{ error }}</span>
+    <span v-if="error" class="error-text">{{ props.error }}</span>
   </div>
 </template>
 
