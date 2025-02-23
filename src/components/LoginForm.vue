@@ -55,9 +55,11 @@ import { ref, reactive } from 'vue';
 import { useRouter } from 'vue-router';
 import { useAuth } from '../composables/useAuth.ts';
 import FormInput from './FormInput.vue';
+import { useToast } from 'vue-toastification'
 
 const router = useRouter();
 const { loginUser, loading, error } = useAuth();
+const toast = useToast()
 
 const login = ref('');
 const tabel = ref('');
@@ -112,10 +114,16 @@ const handleSubmit = async () => {
       password.value = '';
       tabel.value = '';
       rememberMe.value = false;
+      toast.success("Correct user data!", {
+        timeout: 2000
+      });
       router.push('/login');
     }
   } catch (err) {
     console.error('Login failed:', err);
+    toast.error("Incorrect user data!", {
+      timeout: 2000
+    });
   }
 };
 </script>
