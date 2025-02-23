@@ -105,12 +105,14 @@ const handleSubmit = async () => {
 
     if (response.access_token) {
       if (rememberMe.value) {
-        localStorage.setItem('token', response.access_token);
         localStorage.setItem('rememberMe', 'true');
-      } else {
-        sessionStorage.setItem('token', response.access_token);
       }
-      router.push('/dashboard');
+      localStorage.setItem('token', response.access_token);
+      login.value = '';
+      password.value = '';
+      tabel.value = '';
+      rememberMe.value = false;
+      router.push('/login');
     }
   } catch (err) {
     console.error('Login failed:', err);

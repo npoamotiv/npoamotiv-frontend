@@ -2,6 +2,8 @@ import { ref } from 'vue'
 import axios from 'axios'
 import type { LoginCredentials, AuthResponse } from '@/types'
 
+axios.defaults.baseURL = import.meta.env.VITE_API_URL;
+
 export const useAuth = () => {
   const loading = ref(false)
   const error = ref<string | null>(null)
@@ -12,7 +14,7 @@ export const useAuth = () => {
     error.value = null
 
     try {
-      const { data } = await axios.post<AuthResponse>('/api/auth/login', credentials)
+      const { data } = await axios.post<AuthResponse>('/auth/login', credentials)
       isAuthenticated.value = true
       return data
     } catch (err) {
