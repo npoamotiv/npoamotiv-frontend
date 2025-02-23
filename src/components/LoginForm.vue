@@ -138,9 +138,6 @@ const handleSubmit = async () => {
 .login-form {
   padding: 2rem;
   min-width: 28.6rem;
-  background: white;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   @media (max-width: 768px) {
     width: 100%;
   }
