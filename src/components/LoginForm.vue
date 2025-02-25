@@ -1,52 +1,57 @@
 <template>
-  <div class="login-container">
-    <form @submit.prevent="handleSubmit" class="login-form">
-      <h1 class="login-title">Вход в ERP-систему</h1>
+  <div class="page-wrapper">
+    <div class="login-container">
+      <img src="/sap.png" alt="sap logo." class="login-logo">
+      <form @submit.prevent="handleSubmit" class="login-form">
+        <h1 class="login-title">Вход в ERP-систему</h1>
 
-      <FormInput
-        v-model="tabel"
-        type="text"
-        label="Табельный номер"
-        placeholder="Введите табельный номер"
-        :error="errors.tabel"
-        required
-      />
+        <FormInput
+          v-model="tabel"
+          type="text"
+          label="Табельный номер"
+          placeholder="Введите табельный номер"
+          :error="errors.tabel"
+          required
+        />
 
-      <FormInput
-        v-model="login"
-        type="text"
-        label="Логин"
-        placeholder="Введите логин"
-        :error="errors.login"
-        required
-      />
+        <FormInput
+          v-model="login"
+          type="text"
+          label="Логин"
+          placeholder="Введите логин"
+          :error="errors.login"
+          required
+        />
 
-      <FormInput
-        v-model="password"
-        type="password"
-        label="Пароль"
-        placeholder="Введите пароль"
-        :error="errors.password"
-        required
-      />
+        <FormInput
+          v-model="password"
+          type="password"
+          label="Пароль"
+          placeholder="Введите пароль"
+          :error="errors.password"
+          required
+        />
 
-      <div class="remember-me">
-        <div class="checkbox-container">
-          <input type="checkbox" v-model="rememberMe" id="remember" />
-          <label class="checkbox-label" for="remember">Запомнить аккаунт</label>
+        <div class="remember-me">
+          <div class="checkbox-container">
+            <input type="checkbox" v-model="rememberMe" id="remember" />
+            <label class="checkbox-label" for="remember"
+              >Запомнить аккаунт</label
+            >
+          </div>
         </div>
-      </div>
 
-      <div class="form-actions">
-        <button type="submit" class="btn-primary" :disabled="loading">
-          {{ loading ? 'Загрузка...' : 'Войти' }}
-        </button>
-      </div>
+        <div class="form-actions">
+          <button type="submit" class="btn-primary" :disabled="loading">
+            {{ loading ? 'Загрузка...' : 'Войти' }}
+          </button>
+        </div>
 
-      <div v-if="error" class="error-message">
-        {{ error }}
-      </div>
-    </form>
+        <div v-if="error" class="error-message">
+          {{ error }}
+        </div>
+      </form>
+    </div>
   </div>
 </template>
 
@@ -55,11 +60,11 @@ import { ref, reactive } from 'vue';
 import { useRouter } from 'vue-router';
 import { useAuth } from '../composables/useAuth.ts';
 import FormInput from './FormInput.vue';
-import { useToast } from 'vue-toastification'
+import { useToast } from 'vue-toastification';
 
 const router = useRouter();
 const { loginUser, loading, error } = useAuth();
-const toast = useToast()
+const toast = useToast();
 
 const login = ref('');
 const tabel = ref('');
@@ -114,21 +119,28 @@ const handleSubmit = async () => {
       password.value = '';
       tabel.value = '';
       rememberMe.value = false;
-      toast.success("Correct user data!", {
-        timeout: 2000
+      toast.success('Correct user data!', {
+        timeout: 2000,
       });
       router.push('/login');
     }
   } catch (err) {
     console.error('Login failed:', err);
-    toast.error("Incorrect user data!", {
-      timeout: 2000
+    toast.error('Incorrect user data!', {
+      timeout: 2000,
     });
   }
 };
 </script>
 
 <style scoped>
+.page-wrapper {
+  background: var(--primary-color);
+  padding: 55px;
+  min-height: 100vh;
+  height: 100%;
+  display: flex;
+}
 .login-title {
   font-weight: 400;
   font-size: 1.88rem;
@@ -138,11 +150,17 @@ const handleSubmit = async () => {
 }
 .login-container {
   display: flex;
-  justify-content: center;
+  justify-content: start;
   align-items: center;
-  min-height: 100vh;
+  flex-direction: column;
   width: 100%;
-  padding: 1rem;
+  padding: 45px 50px;
+  background: var(--white-color);
+  border-radius: 1.56rem;
+}
+.login-logo {
+  align-self: flex-end;
+  margin-bottom: 143px;
 }
 
 .login-form {
