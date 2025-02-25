@@ -1,58 +1,52 @@
 <template>
-  <div class="page-wrapper">
-    <div class="login-container">
-      <img src="/sap.png" alt="sap logo." class="login-logo">
-      <form @submit.prevent="handleSubmit" class="login-form">
-        <h1 class="login-title">Вход в ERP-систему</h1>
+  <img src="/sap.png" alt="sap logo." class="login-logo" />
+  <form @submit.prevent="handleSubmit" class="login-form">
+    <h1 class="login-title">Вход в ERP-систему</h1>
 
-        <FormInput
-          v-model="tabel"
-          type="text"
-          label="Табельный номер"
-          placeholder="Введите табельный номер"
-          :error="errors.tabel"
-          required
-        />
+    <FormInput
+      v-model="tabel"
+      type="text"
+      label="Табельный номер"
+      placeholder="Введите табельный номер"
+      :error="errors.tabel"
+      required
+    />
 
-        <FormInput
-          v-model="login"
-          type="text"
-          label="Логин"
-          placeholder="Введите логин"
-          :error="errors.login"
-          required
-        />
+    <FormInput
+      v-model="login"
+      type="text"
+      label="Логин"
+      placeholder="Введите логин"
+      :error="errors.login"
+      required
+    />
 
-        <FormInput
-          v-model="password"
-          type="password"
-          label="Пароль"
-          placeholder="Введите пароль"
-          :error="errors.password"
-          required
-        />
+    <FormInput
+      v-model="password"
+      type="password"
+      label="Пароль"
+      placeholder="Введите пароль"
+      :error="errors.password"
+      required
+    />
 
-        <div class="remember-me">
-          <div class="checkbox-container">
-            <input type="checkbox" v-model="rememberMe" id="remember" />
-            <label class="checkbox-label" for="remember"
-              >Запомнить аккаунт</label
-            >
-          </div>
-        </div>
-
-        <div class="form-actions">
-          <button type="submit" class="btn-primary" :disabled="loading">
-            {{ loading ? 'Загрузка...' : 'Войти' }}
-          </button>
-        </div>
-
-        <div v-if="error" class="error-message">
-          {{ error }}
-        </div>
-      </form>
+    <div class="remember-me">
+      <div class="checkbox-container">
+        <input type="checkbox" v-model="rememberMe" id="remember" />
+        <label class="checkbox-label" for="remember">Запомнить аккаунт</label>
+      </div>
     </div>
-  </div>
+
+    <div class="form-actions">
+      <button type="submit" class="btn-primary" :disabled="loading">
+        {{ loading ? 'Загрузка...' : 'Войти' }}
+      </button>
+    </div>
+
+    <div v-if="error" class="error-message">
+      {{ error }}
+    </div>
+  </form>
 </template>
 
 <script setup lang="ts">
@@ -134,29 +128,12 @@ const handleSubmit = async () => {
 </script>
 
 <style scoped>
-.page-wrapper {
-  background: var(--primary-color);
-  padding: 55px;
-  min-height: 100vh;
-  height: 100%;
-  display: flex;
-}
 .login-title {
   font-weight: 400;
   font-size: 1.88rem;
   text-align: start;
   color: var(--black-color);
   margin-bottom: 1.875rem;
-}
-.login-container {
-  display: flex;
-  justify-content: start;
-  align-items: center;
-  flex-direction: column;
-  width: 100%;
-  padding: 45px 50px;
-  background: var(--white-color);
-  border-radius: 1.56rem;
 }
 .login-logo {
   align-self: flex-end;
