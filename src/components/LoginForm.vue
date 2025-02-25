@@ -168,6 +168,7 @@ const backToList = () => {
 .login-form {
   padding: 2rem;
   min-width: 28.6rem;
+  flex: 1;
   @media (max-width: 768px) {
     width: 100%;
   }

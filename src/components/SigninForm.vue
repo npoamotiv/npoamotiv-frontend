@@ -99,6 +99,7 @@ const handleAddAccount = () => {
   align-items: center;
   backdrop-filter: blur(30px);
   background: rgba(255, 255, 255, 0.5);
+  margin-bottom: 20px;
 }
 .account-figure {
   width: 3.75rem;
