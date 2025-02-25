@@ -2,7 +2,7 @@
   <div class="page-wrapper">
     <div class="login-container">
       <SigninForm v-if="activeForm == 'signin'" @add-account="handleAddAccount"/>
-      <LoginForm v-else-if="activeForm == 'login'"/>
+      <LoginForm v-else-if="activeForm == 'login'" @reset-account-state="resetAccountState"/>
     </div>
   </div>
 </template>
@@ -18,6 +18,10 @@ const activeForm = ref<'signin' | 'login'>('signin');
 const handleAddAccount = () => {
   activeForm.value = 'login';
 };
+
+const resetAccountState = () => {
+  activeForm.value = 'signin';
+}
 </script>
 
 <style scoped>

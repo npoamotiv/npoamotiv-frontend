@@ -1,5 +1,25 @@
 <template>
-  <img src="/sap.png" alt="sap logo." class="login-logo" />
+  <div class="login-header">
+    <div class="back-arrow" @click="backToList()">
+      <svg
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M15 18L9 12L15 6"
+          stroke="#181818"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+      </svg>
+      <p class="back-arrow-text">Назад</p>
+    </div>
+    <img src="/sap.png" alt="sap logo." class="login-logo" />
+  </div>
   <form @submit.prevent="handleSubmit" class="login-form">
     <h1 class="login-title">Вход в ERP-систему</h1>
 
@@ -55,6 +75,10 @@ import { useRouter } from 'vue-router';
 import { useAuth } from '../composables/useAuth.ts';
 import FormInput from './FormInput.vue';
 import { useToast } from 'vue-toastification';
+
+interface Emits {
+  (e: 'reset-account-state'): void;
+}
 
 const router = useRouter();
 const { loginUser, loading, error } = useAuth();
@@ -125,6 +149,11 @@ const handleSubmit = async () => {
     });
   }
 };
+const emit = defineEmits<Emits>();
+
+const backToList = () => {
+  emit('reset-account-state');
+};
 </script>
 
 <style scoped>
@@ -134,10 +163,6 @@ const handleSubmit = async () => {
   text-align: start;
   color: var(--black-color);
   margin-bottom: 1.875rem;
-}
-.login-logo {
-  align-self: flex-end;
-  margin-bottom: 143px;
 }
 
 .login-form {
@@ -198,5 +223,26 @@ input[type='checkbox'] {
   color: #666;
   font-size: 0.875rem;
   user-select: none;
+}
+.back-arrow {
+  display: flex;
+  gap: 10px;
+  & svg {
+    cursor: pointer;
+  }
+}
+.back-arrow-text {
+  font-weight: 400;
+  font-size: 1.25rem;
+  color: #181818;
+  line-height: 1;
+  cursor: pointer;
+}
+.login-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 143px;
+  width: 100%;
 }
 </style>
